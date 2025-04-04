@@ -1,0 +1,105 @@
+.body{
+    font-size: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    min-height: 100vh;
+}
+
+.header {
+display: flex;
+align-items: center;
+justify-content:space-around;
+padding: 20px;
+position: relative;
+width: 100%;
+}
+
+.header img {
+height: 45px;
+}
+
+.header i {
+position: absolute;
+right: 100px;
+top: 78px;
+transform: translateY(-160%);
+cursor: pointer;
+}
+
+.btn-success {
+    background-color: #aae865 !important;
+    border-style: none !important;
+    color: #000 !important;
+}
+
+
+.dropdown-menu-scroll {
+    max-height: 200px; /* Define altura máxima */
+    overflow-y: auto; /* Adiciona rolagem vertical */
+}
+
+.btn-filte{
+    background-color:#aee865;
+    padding: 7px;
+    width: 100px;
+    border: none;
+    border-radius: 5px;
+    margin-left: 10px;
+}
+
+.table-header {
+    margin: 10px 20px;
+    align-items: center;
+    justify-items: center;
+}
+
+.container-main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding: 15px;
+}
+
+.col-main {
+    background-color: #aae865;
+}
+
+.table-hover td {
+    cursor: pointer;
+}
+
+.table-body{
+    width: 50%;
+    margin-left: 25%;
+    max-height: 450px;
+    background-color: #fffb;
+    box-shadow: 0 .2rem .8rem #0005;
+    border-radius: 6px;
+    overflow: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+tfoot {
+    position: sticky;
+    bottom: 0;
+    background-color: #aae865;
+}
+
+/************** RESPONSIVIDADE *************/
+
+@media (max-width: 700px) {
+    .header i {
+        position: absolute;
+        right: 50px;
+        top: 78px;
+        transform: translateY(-160%);
+        
+    }
+}

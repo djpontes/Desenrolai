@@ -1,0 +1,293 @@
+.body{
+    font-size: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    min-height: 100vh;
+}
+
+.header {
+display: flex;
+align-items: center;
+justify-content:space-around;
+padding: 20px;
+position: relative;
+width: 100%;
+}
+
+.header img {
+height: 45px;
+}
+
+.header i {
+position: absolute;
+right: 100px;
+top: 78px;
+transform: translateY(-100%);
+cursor: pointer;
+}
+
+.btn-success {
+    background-color: #aae865 !important;
+    border-style: none !important;
+    color: #000 !important;
+}
+
+
+.dropdown-menu-scroll {
+    max-height: 200px; /* Define altura máxima */
+    overflow-y: auto; /* Adiciona rolagem vertical */
+}
+.add i{
+    position: absolute;
+    right: 120px;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+.btn-filte{
+    background-color:#aee865;
+    padding: 7px;
+    width: 100px;
+    border: none;
+    border-radius: 5px;
+    margin-left: 10px;
+}
+
+.table-header {
+    margin: 10px 20px;
+    align-items: center;
+    justify-items: center;
+}
+
+.container-main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding: 15px;
+}
+
+
+.container-main p {
+    margin-top: 15px;
+}
+
+.col-main {
+    background-color: #aae865;
+}
+
+.table-hover td {
+    cursor: pointer;
+}
+
+.icon.editar{
+    cursor: pointer;
+    color: #aae865;
+}
+
+.icon.excluir{
+    cursor: pointer;
+    color: #ff0000;
+}
+
+.table-body{
+    width: 85%;
+    margin-left: 8%;
+    max-height: 450px;
+    background-color: #fffb;
+    box-shadow: 0 .2rem .8rem #0005;
+    border-radius: 6px;
+    overflow: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+tfoot {
+    position: sticky;
+    bottom: 0;
+    background-color: #aae865;
+}
+
+/* Estilizando o modal */
+.modal {
+    display: none; /* Começa invisível */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Fundo escuro */
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+/* Conteúdo do modal */
+.modal-content {
+    background: white;
+    padding: 6px;
+    max-width: 600px;
+    height: 550px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 10px;
+    position: relative;
+    overflow: hidden;
+}
+
+.text-add h2 {
+    margin-top: 20px;
+}
+
+form {
+    position: absolute;
+    margin-top: 30px;
+    transition: .5s;
+    width: 300px;
+    height: 400px;
+}
+
+.fechar {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 20px;
+    text-decoration: none;
+    color: black;
+    cursor: pointer;
+}
+
+.input-despesa{
+    margin-top: 60px;
+}
+
+.input-valor {
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+.input-data {
+    margin-bottom: 40px;
+}
+
+.input-observacao{
+    margin-bottom: 40px;
+}
+
+.modal-content input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.modal-content .form-botao {
+    background-color: #AEE865;
+    border-radius: 5px;
+    border-style: none;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    font-size: 20px;
+    padding: 10px;
+    width: 100%;
+    cursor: pointer;
+    transition: transform 0.3s ease; /* Transição para o aumento */
+}
+
+.form-botao:hover {
+    background-color:#B9E482;
+}
+
+.modal-content-remove {
+    background: white;
+    padding: 6px;
+    max-width: 500px;
+    height: 170px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 10px;
+    position: relative;
+    overflow: hidden;
+}
+
+.text-remove {
+    margin-top: 35px;
+    margin-left: 5px;
+}
+
+
+.botao-remove {
+    display: flex;
+    gap: 20px;
+}
+
+.botao-remove button {
+    border: none;
+    padding: 5px;
+    border-radius: 5px;
+    background-color: #aae865;
+    transition: transform .3s ease;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);   
+}
+
+.botao-remove .btn-rm:hover {
+    background-color:#B9E482;
+}
+
+
+
+
+
+
+/************** RESPONSIVIDADE *************/
+@media(max-width: 840px) {
+    .add i{
+        position: absolute;
+        right: 60px;
+        transform: translateY(-50%);
+        cursor: pointer;    
+    }
+}
+
+@media (max-width: 700px) {
+    .header i {
+        position: absolute;
+        right: 50px;
+        top: 78px;
+        transform: translateY(-150%);
+        
+    }
+
+    .add i{
+        position: absolute;
+        right: 60px;
+        transform: translateY(-175%);
+        cursor: pointer;    
+    }
+
+    .container-main {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .btn-filter {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
+}
+
+
+
+
+

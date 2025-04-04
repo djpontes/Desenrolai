@@ -1,0 +1,241 @@
+body {
+    font-size: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/********************* CSS DA HOME ************************/
+.conteudo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 90%;
+    max-width: 1200px;
+    margin: auto;
+} 
+
+.conteudo-escrito {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    max-width: 50%;
+}
+
+.conteudo-titulo {
+    font-weight: 600;
+    font-size: 46px;
+}
+
+.conteudo-image{
+    height: 80px;
+}
+
+.conteudo-botao{
+    background-color: #AEE865;
+    border-radius: 5px;
+    border-style: none;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+    font-weight: 500;
+    font-size: 20px;
+    padding: 12px;
+    width: 180px;
+    cursor: pointer;
+    transition: transform 0.3s ease; /* Transição para o aumento */
+}
+
+.conteudo-botao:hover {
+    background-color:#B9E482;
+    transform: scale(1.1); /* Aumenta o tamanho do botão */
+}
+
+.conteudo-image-telefone{
+    height: 695px;
+    max-width: 100%;
+    flex-shrink: 0;
+    position: relative;
+}
+
+/***************** DEIXANDO A HOME RESPONSIVO ***********************/
+@media (max-width: 1220px) {
+    .conteudo {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .conteudo-escrito {
+        max-width: 100%;
+        align-items: center;
+    }
+
+    .conteudo-titulo {
+        font-size: 40px;
+    }
+
+    .conteudo-botao {
+        width: 100%;
+        max-width: 250px;
+    }
+
+    .conteudo-image-telefone {
+        height: 359px;
+        max-width: 80%;
+    }
+}
+
+/*************************** FIM DO MENU ******************************/
+
+/* Estilizando o modal */
+.modal {
+    display: none; /* Começa invisível */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Fundo escuro */
+    justify-content: center;
+    align-items: center;
+}
+
+/* Exibir modal quando o link for ativado */
+.modal:target {
+    display: flex;
+}
+
+/* Conteúdo do modal */
+.modal-content {
+    background: white;
+    padding: 6px;
+    width: 350px;
+    height: 450px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 10px;
+    position: relative;
+    overflow: hidden;
+}
+
+form {
+    position: absolute;
+    margin-top: 80px;
+    transition: .5s;
+    width: 300px;
+    height: 400px;
+}
+
+.btnForm {
+    margin-top: 40px;
+    position: relative;
+    border-radius: 30px;
+    box-shadow: 0 0 7px 0 rgba(174, 232, 101, 1);
+    
+}
+
+.btnForm button {
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    position: relative;
+    padding: 10px 29px;
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+}
+
+
+.btnColor {
+    position: absolute;
+    width: 120px;
+    height: 100%;
+    background: linear-gradient(to right, #B9E482, #AEE865);
+    border-radius: 30px;
+    transition: .3s;
+}
+
+
+.fechar {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 20px;
+    text-decoration: none;
+    color: black;
+    cursor: pointer;
+}
+
+.input-name {
+    margin-top: 40px;
+}
+
+.input-email {
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+.input-senha {
+    margin-bottom: 40px;
+}
+
+
+.modal-content input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+
+.modal-content .form-botao {
+    background-color: #AEE865;
+    border-radius: 5px;
+    border-style: none;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    font-size: 20px;
+    padding: 10px;
+    width: 100%;
+    cursor: pointer;
+    transition: transform 0.3s ease; /* Transição para o aumento */
+}
+
+.form-botao:hover {
+    background-color:#B9E482;
+}
+
+#login {
+    left: 25px;
+}
+
+#signup {
+    left: 450px;
+}
+
+.password-container {
+    position: relative;
+    width: 100%;
+}
+
+.password-container i {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-27px);
+    cursor: pointer;
+}
+
+.campo-senha {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.campo-senha i {
+    position: absolute;
+    right: 10px;
+    cursor: pointer;
+    transform: translateY(-19px);
+}
+
