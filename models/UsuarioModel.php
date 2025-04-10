@@ -3,11 +3,10 @@ class UsuarioModel {
     private $pdo;
 
     public function __construct() {
-        // Conexão direta (simplificada)
         $this->pdo = new PDO(
             'mysql:host=localhost;dbname=desenrola',
-            'root',          // Seu usuário MySQL
-            ''               // Sua senha MySQL
+            'root',
+            ''
         );
     }
 
@@ -15,16 +14,30 @@ class UsuarioModel {
         $sql = "INSERT INTO usuario (NOME, EMAIL, SENHA) VALUES (?, ?, ?)";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute([$nome, $email, $senha]);
-        
-        // Retorna o ID do novo usuário
         return $this->pdo->lastInsertId();
     }
-    
+
     public function login($email, $senha) {
-        $sql = "SELECT ID_USUARIO, NOME, SENHA FROM usuario WHERE EMAIL = ? AND SENHA = ?"; // ← Comparação direta
+        $sql = "SELECT ID_USUARIO, NOME, EMAIL, SENHA FROM usuario WHERE EMAIL = ? AND SENHA = ?";
         $stmt = $this->pdo->prepare($sql);
-        $stmt->execute([$email, $senha]); // ← Envia a senha em texto puro
-        return $stmt->fetch(); // Retorna o usuário se encontrado
+        $stmt->execute([$email, $senha]);
+        return $stmt->fetch();
+    }
+
+    public function atualizarUsuario($id, $nome, $email, $senha = null) {
+        try {
+            if ($senha !== null) {
+                $stmt = $this->pdo->prepare("UPDATE usuario SET NOME = ?, EMAIL = ?, SENHA = ? WHERE ID_USUARIO = ?");
+                $stmt->execute([$nome, $email, $senha, $id]);
+            } else {
+                $stmt = $this->pdo->prepare("UPDATE usuario SET NOME = ?, EMAIL = ? WHERE ID_USUARIO = ?");
+                $stmt->execute([$nome, $email, $id]);
+            }
+            return $stmt->rowCount() > 0;
+        } catch (PDOException $e) {
+            error_log("Erro ao atualizar usuário: " . $e->getMessage());
+            return false;
+        }
     }
 }
 ?>

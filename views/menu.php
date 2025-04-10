@@ -1,16 +1,21 @@
-
 <?php
 if (session_status() !== PHP_SESSION_ACTIVE) {
     session_start();
 }
+
 if (!isset($_SESSION['id_usuario'])) {
     header('Location: home.php');
     exit();
 }
 
-if (!isset($_SESSION['id_usuario'])) {
-    header('Location: home.php');
-    exit();
+if (isset($_SESSION['sucesso'])) {
+    echo '<script>alert("' . $_SESSION['sucesso'] . '");</script>';
+    unset($_SESSION['sucesso']);
+}
+
+if (isset($_SESSION['erro'])) {
+    echo '<script>alert("' . $_SESSION['erro'] . '");</script>';
+    unset($_SESSION['erro']);
 }
 ?>
 
@@ -28,9 +33,10 @@ if (!isset($_SESSION['id_usuario'])) {
 <body>
     <header class="header"> 
         <img src="images/logo-desenrolai.svg" class="image-logo">
-        <!-- Alterando para logout (irá destruir a sessão) -->
-        <i class="fa-solid fa-arrow-right-to-bracket fa-2x" style="color: #000000;" 
-           onclick="window.location.href='controllers/AuthController.php?action=logout'"></i>
+        <!-- Ícone de logout -->
+        <i class="fa-solid fa-arrow-right-to-bracket fa-2x" 
+        style="color: #000000; cursor: pointer;" 
+        onclick="window.location.href='../controllers/AuthController.php?action=logout'"></i>
     </header>
 
     <main class="main"> 
@@ -62,7 +68,7 @@ if (!isset($_SESSION['id_usuario'])) {
             </div>
 
             <!-- Formulário para editar perfil (substitua pelos dados reais do usuário) -->
-            <form class="form-perfil" action="controllers/UsuarioController.php?action=editar" method="POST">
+            <form class="form-perfil" action="../controllers/UsuarioController.php?action=editar" method="POST">
                 <input type="text" name="nome" value="<?php echo $_SESSION['nome_usuario'] ?? ''; ?>" class="input-name">
                 <input type="email" name="email" value="<?php echo $_SESSION['email_usuario'] ?? ''; ?>" class="input-email">
                 <div class="campo-senha">
@@ -71,6 +77,7 @@ if (!isset($_SESSION['id_usuario'])) {
                 </div>                
                 <button type="submit" class="form-botao" id="btnCadastrar">Editar</button>
             </form>
+
         </div>
     </div>
 
