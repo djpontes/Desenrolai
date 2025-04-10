@@ -1,18 +1,36 @@
+<?php
+if (isset($_GET['sucesso']) && $_GET['sucesso'] == 1) {
+    echo '<script>alert("Dados salvos com sucesso!");</script>';
+}
+
+require_once '../models/Despesa.php';
+session_start();
+
+$usuario_id = $_SESSION['id_usuario'] ?? null;
+
+$despesas = [];
+
+if ($usuario_id) {
+    $model = new Despesa();
+    $despesas = $model->listarPorUsuario($usuario_id);
+}
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/view/style/global.css">
-    <link rel="stylesheet" href="/view/style/despesa.css">
+    <link rel="stylesheet" href="style/global.css">
+    <link rel="stylesheet" href="style/despesa.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <title>Desenrola.i</title>
 </head>
 <body>
     <header class="header"> 
-        <img src="/view/images/logo-desenrolai.svg" class="image-logo">
-        <i class="fa-solid fa-arrow-right-to-bracket fa-2x" style="color: #000;" onclick="window.location.href='home.html'"></i>
+        <img src="images/logo-desenrolai.svg" class="image-logo">
+        <i class="fa-solid fa-arrow-right-to-bracket fa-2x" style="color: #000;" onclick="window.location.href='home.php'"></i>
     </header>
 
     <main class="main">
@@ -63,20 +81,25 @@
             <table class="table table-hover">
                 <thead>
                   <tr class="col-main">
-                    <th scope="col">Despesas</th>
+                    <th scope="col">Descrição</th>
                     <th scope="col">Valor</th>
                     <th scope="col">Data</th>
-                    <th scope="col">Observação</th>
+                    <th scope="col">Categoria</th>
                     <th scope="col">Editar</th>
                     <th scope="col">Excluir</th>
                   </tr>
                 </thead>
-                    <tbody>
+                <tbody>
+                    <?php
+                    $total = 0;
+                    foreach ($despesas as $despesa) :
+                        $total += $despesa['VALOR'];
+                    ?>
                         <tr>
-                            <td>Bolo de morango</td>
-                            <td>84</td>
-                            <td>13/05/2024</td>
-                            <td>Dividido em 3x, proximo vencimento dia 02/06</td>
+                            <td><?= htmlspecialchars($despesa['DESCRICAO']) ?></td>
+                            <td>R$ <?= number_format($despesa['VALOR'], 2, ',', '.') ?></td>
+                            <td><?= date('d/m/Y', strtotime($despesa['DATAS'])) ?></td>
+                            <td><?= htmlspecialchars($despesa['CATEGORIA']) ?></td>
                             <td>
                                 <i class="fas fa-edit fa-lg icon editar" id="abrirModalEdit"></i>
                             </td>
@@ -84,21 +107,14 @@
                                 <i class="fas fa-trash-alt fa-lg icon excluir" id="abrirModalRemove"></i>
                             </td>
                         </tr>
-                        <tr>
-                            <td>Sitio</td>
-                            <td>320</td>
-                            <td>12/05/2024</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tfoot>
-                            <tr class="col-main">
-                                <th>Total</th>
-                                <td>15000</td>
-                            </tr>
-                        </tfoot>
-                    </tbody>
+                    <?php endforeach; ?>
+                </tbody>
+                <tfoot>
+    <tr class="col-main">
+        <th>Total</th>
+        <td colspan="5">R$ <?= number_format($total, 2, ',', '.') ?></td>
+    </tr>
+</tfoot>
               </table>
         </section>
     </main>
@@ -112,13 +128,31 @@
                 <h2>Adicionar despesa</h2>
             </div>
     
-    <form class="add-despesa">
-        <input type="text" placeholder="Digite sua despesa..." class="input-despesa">
-        <input type="text" placeholder="Digite o valor..." class="input-valor" id="valor">
-        <input type="date" class="input-data" required/>   
-        <input type="text" class="input-observacao" placeholder="Digite uma observação...">             
-        <button class="form-botao" id="btnAdicionar">Adicionar</button>
-    </form>
+            <form class="add-despesa" action="../controllers/DespesaController.php?action=cadastrar" method="POST">
+                <input type="text" name="descricao" placeholder="Digite sua despesa..." class="input-despesa" required>
+                <!-- Campo visível -->
+                <input type="text" name="valor_formatado" placeholder="Digite o valor (ex: 1234,56)" class="input-valor" required oninput="formatarValor(this)">
+
+                <!-- Campo real escondido -->
+                <input type="hidden" name="valor" id="valorReal">
+                <input type="date" name="data" class="input-data" required/>   
+                
+                <select name="categoria" class="input-categoria" required>
+                    <option value="" disabled selected>Selecione uma categoria</option>
+                    <option value="Moradia">Moradia</option>
+                    <option value="Alimentação">Alimentação</option>
+                    <option value="Transporte">Transporte</option>
+                    <option value="Saúde">Saúde</option>
+                    <option value="Educação">Educação</option>
+                    <option value="Lazer">Lazer</option>
+                    <option value="Serviços e Assinaturas">Serviços e Assinaturas</option>
+                    <option value="Investimentos">Investimentos</option>
+                    <option value="Outro">Outro</option>
+                </select>
+
+                <button type="submit" class="form-botao" id="btnAdicionar">Adicionar</button>
+            </form>
+
 </div>
     </div>
 
@@ -161,5 +195,27 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
 
     <script src="script/despesa.js"></script>
+
+    <script>
+    function formatarValor(input) {
+        let valor = input.value;
+
+        // Remove tudo que não é número ou vírgula
+        valor = valor.replace(/[^\d,]/g, '');
+
+        // Se já tiver mais de uma vírgula, remove a extra
+        let partes = valor.split(',');
+        if (partes.length > 2) {
+            valor = partes[0] + ',' + partes[1];
+        }
+
+        input.value = valor;
+
+        // Converte para formato americano
+        let valorBanco = valor.replace('.', '').replace(',', '.');
+        document.getElementById('valorReal').value = valorBanco;
+    }
+    </script>
+
 </body>
 </html>

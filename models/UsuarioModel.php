@@ -4,7 +4,7 @@ class UsuarioModel {
 
     public function __construct() {
         $this->pdo = new PDO(
-            'mysql:host=localhost;dbname=desenrola',
+            'mysql:host=localhost;dbname=desenrolai',
             'root',
             ''
         );
