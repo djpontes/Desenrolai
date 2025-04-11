@@ -78,44 +78,49 @@ if ($usuario_id) {
         </section>
 
         <section class="table-body">
-            <table class="table table-hover">
-                <thead>
-                  <tr class="col-main">
+        <table class="table table-hover">
+            <thead>
+                <tr class="col-main">
                     <th scope="col">Descrição</th>
                     <th scope="col">Valor</th>
                     <th scope="col">Data</th>
                     <th scope="col">Categoria</th>
                     <th scope="col">Editar</th>
                     <th scope="col">Excluir</th>
-                  </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    $total = 0;
-                    foreach ($despesas as $despesa) :
-                        $total += $despesa['VALOR'];
-                    ?>
-                        <tr>
-                            <td><?= htmlspecialchars($despesa['DESCRICAO']) ?></td>
-                            <td>R$ <?= number_format($despesa['VALOR'], 2, ',', '.') ?></td>
-                            <td><?= date('d/m/Y', strtotime($despesa['DATAS'])) ?></td>
-                            <td><?= htmlspecialchars($despesa['CATEGORIA']) ?></td>
-                            <td>
-                                <i class="fas fa-edit fa-lg icon editar" id="abrirModalEdit"></i>
-                            </td>
-                            <td>
-                                <i class="fas fa-trash-alt fa-lg icon excluir" id="abrirModalRemove"></i>
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
-                </tbody>
-                <tfoot>
-    <tr class="col-main">
-        <th>Total</th>
-        <td colspan="5">R$ <?= number_format($total, 2, ',', '.') ?></td>
-    </tr>
-</tfoot>
-              </table>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                $total = 0;
+                foreach ($despesas as $despesa) :
+                    $total += $despesa['VALOR'];
+                ?>
+                    <tr>
+                        <td><?= htmlspecialchars($despesa['DESCRICAO']) ?></td>
+                        <td>R$ <?= number_format($despesa['VALOR'], 2, ',', '.') ?></td>
+                        <td><?= date('d/m/Y', strtotime($despesa['DATAS'])) ?></td>
+                        <td><?= htmlspecialchars($despesa['CATEGORIA']) ?></td>
+                        <td>
+                            <i class="fas fa-edit fa-lg icon editar" id="abrirModalEdit"></i>
+                        </td>
+                        <td>
+                        <form action="../controllers/DespesaController.php?action=deletar" method="POST" onsubmit="return confirm('Tem certeza que deseja remover esta despesa?');" style="display:inline;">
+                            <input type="hidden" name="id" value="<?= htmlspecialchars($despesa['ID_DESPESA']) ?>">
+                            <button type="submit" class="btn btn-link p-0 m-0 border-0" style="color: red;">
+                                <i class="fas fa-trash-alt fa-lg icon excluir"></i>
+                            </button>
+                        </form>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+            <tfoot>
+                <tr class="col-main">
+                    <th>Total</th>
+                    <td colspan="5">R$ <?= number_format($total, 2, ',', '.') ?></td>
+                </tr>
+            </tfoot>
+        </table>
         </section>
     </main>
 
@@ -175,20 +180,6 @@ if ($usuario_id) {
 </div>
     </div>
 
-<!------- REMOVER DESPESA ------------>
-    <div id="modal-remove" class="modal">
-        <div class="modal-content-remove">
-            <a class="fechar" id="fecharModalRemove">&times;</a><!-- fecha o modal -->
-            <div class="text-remove">
-                <p><strong>Você tem certeza que deseja remover a despesa: Bolo de morango</strong></p>
-            </div>
-            <div class="botao-remove">
-                <button class="btn-rm">Sim</button>
-                <button class="btn-rm" id="fecharModalRemoveBtn">Não</button>
-            </div>
-        </div>
-    </div>
-
 
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
@@ -217,5 +208,27 @@ if ($usuario_id) {
     }
     </script>
 
+    <script>
+        // Abrir o modal de remoção e preencher os dados
+        document.querySelectorAll('.open-remove-modal').forEach(icon => {
+            icon.addEventListener('click', () => {
+                const id = icon.getAttribute('data-id');
+                const descricao = icon.getAttribute('data-desc');
+
+                document.getElementById('id-despesa-deletar').value = id;
+                document.getElementById('descricao-despesa-remove').textContent = descricao;
+                document.getElementById('modal-remove').style.display = 'block';
+            });
+        });
+
+        // Fechar modal
+        document.getElementById('fecharModalRemove').addEventListener('click', () => {
+            document.getElementById('modal-remove').style.display = 'none';
+        });
+        document.getElementById('fecharModalRemoveBtn').addEventListener('click', () => {
+            document.getElementById('modal-remove').style.display = 'none';
+        });
+    </script>
+
 </body>
-</html>
+</html> 

@@ -29,5 +29,12 @@ class Despesa {
         $stmt->execute([':usuario_id' => $usuario_id]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function deletar($id) {
+        $sql = "DELETE FROM despesa WHERE ID_DESPESA = :id";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+        return $stmt->execute();
+    }
 }
 ?>
