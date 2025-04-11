@@ -203,16 +203,26 @@ if ($usuario_id) {
             <h2>Editar despesa</h2>
         </div>
 
-<form class="edit-despesa">
-    <input type="text" placeholder="Bolo de morango" class="input-despesa">
-    <input type="text" placeholder="84" class="input-valor" id="valor">
-    <input type="date" class="input-data" required/>   
-    <input type="text" class="input-observacao" placeholder="Dividido em 3x, proximo vencimento dia 02/06">             
-    <button class="form-botao" id="btnEditar">Editar</button>
-</form>
-</div>
+        <form class="edit-despesa">
+            <input type="text" placeholder="Bolo de morango" class="input-despesa">
+            <input type="text" placeholder="84" class="input-valor" id="valor">
+            <input type="date" class="input-data" required/>   
+            <select name="categoria" class="input-categoria" required>
+                    <option value="" disabled selected>Selecione uma categoria</option>
+                    <option value="Moradia">Moradia</option>
+                    <option value="Alimentação">Alimentação</option>
+                    <option value="Transporte">Transporte</option>
+                    <option value="Saúde">Saúde</option>
+                    <option value="Educação">Educação</option>
+                    <option value="Lazer">Lazer</option>
+                    <option value="Serviços e Assinaturas">Serviços e Assinaturas</option>
+                    <option value="Investimentos">Investimentos</option>
+                    <option value="Outro">Outro</option>
+                </select>            
+            <button class="form-botao" id="btnEditar">Editar</button>
+        </form>
     </div>
-
+    </div>
 
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
