@@ -115,7 +115,14 @@ if ($usuario_id) {
                         <td><?= date('d/m/Y', strtotime($despesa['DATAS'])) ?></td>
                         <td><?= htmlspecialchars($despesa['CATEGORIA']) ?></td>
                         <td>
-                            <i class="fas fa-edit fa-lg icon editar" id="abrirModalEdit"></i>
+                        <i class="fas fa-edit fa-lg icon editar" 
+                            data-id="<?= $despesa['ID_DESPESA'] ?>" 
+                            data-descricao="<?= htmlspecialchars($despesa['DESCRICAO']) ?>" 
+                            data-valor="<?= number_format($despesa['VALOR'], 2, ',', '.') ?>" 
+                            data-data="<?= $despesa['DATAS'] ?>" 
+                            data-categoria="<?= $despesa['CATEGORIA'] ?>"
+                            onclick="abrirModalEditar(this)">
+                        </i>
                         </td>
                         <td>
                         <form action="../controllers/DespesaController.php?action=deletar" method="POST" onsubmit="return confirm('Tem certeza que deseja remover esta despesa?');" style="display:inline;">
@@ -195,34 +202,73 @@ if ($usuario_id) {
     </div>
 
 <!---------- EDITAR UMA DESPESA ---------->
-    <div id="modal-edit" class="modal">
-    <div class="modal-content">
-        <a class="fechar" id="fecharModalEdit">&times;</a><!-- fecha o modal -->
+<div id="modal-edit" class="modal">
+  <div class="modal-content">
+    <a class="fechar" id="fecharModalEdit">&times;</a>
 
-        <div class="text-add">
-            <h2>Editar despesa</h2>
-        </div>
+    <div class="text-add">
+      <h2>Editar despesa</h2>
+    </div>
 
-        <form class="edit-despesa">
-            <input type="text" placeholder="Bolo de morango" class="input-despesa">
-            <input type="text" placeholder="84" class="input-valor" id="valor">
-            <input type="date" class="input-data" required/>   
-            <select name="categoria" class="input-categoria" required>
-                    <option value="" disabled selected>Selecione uma categoria</option>
-                    <option value="Moradia">Moradia</option>
-                    <option value="Alimentação">Alimentação</option>
-                    <option value="Transporte">Transporte</option>
-                    <option value="Saúde">Saúde</option>
-                    <option value="Educação">Educação</option>
-                    <option value="Lazer">Lazer</option>
-                    <option value="Serviços e Assinaturas">Serviços e Assinaturas</option>
-                    <option value="Investimentos">Investimentos</option>
-                    <option value="Outro">Outro</option>
-                </select>            
-            <button class="form-botao" id="btnEditar">Editar</button>
-        </form>
-    </div>
-    </div>
+    <form class="edit-despesa" action="../controllers/DespesaController.php?action=editar" method="POST">
+      <!-- Campo oculto para o ID da despesa -->
+      <input type="hidden" name="id" id="edit-id">
+
+      <!-- Descrição -->
+      <input 
+        type="text" 
+        name="descricao" 
+        id="edit-descricao" 
+        placeholder="Bolo de morango" 
+        class="input-despesa" 
+        required
+      >
+
+      <!-- Valor -->
+      <input 
+        type="text" 
+        name="valor" 
+        id="edit-valor" 
+        placeholder="84" 
+        class="input-valor" 
+        required
+      >
+
+      <!-- Data -->
+      <input 
+        type="date" 
+        name="data" 
+        id="edit-data" 
+        class="input-data" 
+        required
+      >
+
+      <!-- Categoria -->
+      <select 
+        name="categoria" 
+        id="edit-categoria" 
+        class="input-categoria" 
+        required
+      >
+        <option value="" disabled selected>Selecione uma categoria</option>
+        <option value="Moradia">Moradia</option>
+        <option value="Alimentação">Alimentação</option>
+        <option value="Transporte">Transporte</option>
+        <option value="Saúde">Saúde</option>
+        <option value="Educação">Educação</option>
+        <option value="Lazer">Lazer</option>
+        <option value="Serviços e Assinaturas">Serviços e Assinaturas</option>
+        <option value="Investimentos">Investimentos</option>
+        <option value="Outro">Outro</option>
+      </select>
+
+      <!-- Botão -->
+      <button type="submit" class="form-botao" id="btnEditar">Editar</button>
+    </form>
+  </div>
+</div>
+
+
 
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
@@ -303,6 +349,44 @@ if ($usuario_id) {
                 alert("Selecione mês e ano!");
             }
         });
+    </script>
+
+    <script>
+    function abrirModalEditar(element) {
+    // Pega os dados diretamente dos atributos data-*
+    const id = element.dataset.id;
+    const descricao = element.dataset.descricao;
+    const valor = element.dataset.valor.replace(',', '.'); // garante que funcione no campo
+    const data = element.dataset.data;
+    const categoria = element.dataset.categoria;
+
+    // Preenche os campos do modal
+    document.getElementById('edit-id').value = id;
+    document.getElementById('edit-descricao').value = descricao;
+    document.getElementById('edit-valor').value = valor;
+    document.getElementById('edit-data').value = data;
+    document.getElementById('edit-categoria').value = categoria;
+
+    // Abre o modal
+    document.getElementById('modal-edit').style.display = 'block';
+    }
+
+    document.getElementById('fecharModalEdit').addEventListener('click', function () {
+    document.getElementById('modal-edit').style.display = 'none';
+    });
+
+
+
+        // Abrir o modal de adicionar
+    document.getElementById('abrirModalAdd').addEventListener('click', function () {
+        document.getElementById('modal-add').style.display = 'block';
+    });
+
+    // Fechar o modal de adicionar
+    document.getElementById('fecharModalAdd').addEventListener('click', function () {
+        document.getElementById('modal-add').style.display = 'none';
+    });
+
     </script>
 
 </body>

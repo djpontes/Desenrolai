@@ -69,5 +69,17 @@ class Despesa {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function editar($id, $descricao, $valor, $data, $categoria) {
+        $sql = "UPDATE despesa SET DESCRICAO = :descricao, VALOR = :valor, DATAS = :data, CATEGORIA = :categoria WHERE ID_DESPESA = :id";
+        $stmt = $this->pdo->prepare($sql);
+        return $stmt->execute([
+            ':id' => $id,
+            ':descricao' => $descricao,
+            ':valor' => $valor,
+            ':data' => $data,
+            ':categoria' => $categoria
+        ]);
+    }
+
 }
 ?>

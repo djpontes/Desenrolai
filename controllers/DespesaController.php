@@ -46,4 +46,18 @@ if ($action === 'filtrar') {
     header("Location: ../views/despesa.php");
     exit;
 }
+
+if ($action === 'editar') {
+    $id = intval($_POST['id']);
+    $descricao = $_POST['descricao'];
+    $valor = floatval($_POST['valor']);
+    $data = $_POST['data'];
+    $categoria = $_POST['categoria'];
+
+    $model->editar($id, $descricao, $valor, $data, $categoria);
+
+    header("Location: ../views/despesa.php?sucesso=1");
+    exit;
+}
+
 ?>

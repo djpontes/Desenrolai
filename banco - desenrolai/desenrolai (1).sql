@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 11/04/2025 às 13:24
+-- Tempo de geração: 11/04/2025 às 23:53
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -41,9 +41,9 @@ CREATE TABLE `despesa` (
 --
 
 INSERT INTO `despesa` (`ID_DESPESA`, `USUARIO_ID`, `DESCRICAO`, `CATEGORIA`, `VALOR`, `DATAS`) VALUES
-(17, 1, 'deus me ajude', 'Serviços e Assinaturas', 6.55, '2025-04-18'),
-(18, 2, 'disney+', 'Serviços e Assinaturas', 9.90, '2025-04-18'),
-(19, 1, 'jantar', 'Alimentação', 32.20, '2025-04-10');
+(30, 2, 'bolo', 'Alimentação', 9.90, '2025-04-11'),
+(31, 2, 'cafe', 'Alimentação', 9.70, '2025-03-05'),
+(32, 2, 'netflix', 'Serviços e Assinaturas', 20.90, '2025-03-28');
 
 -- --------------------------------------------------------
 
@@ -92,7 +92,7 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de tabela `despesa`
 --
 ALTER TABLE `despesa`
-  MODIFY `ID_DESPESA` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `ID_DESPESA` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT de tabela `usuario`
