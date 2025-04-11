@@ -7,12 +7,20 @@ require_once '../models/Despesa.php';
 session_start();
 
 $usuario_id = $_SESSION['id_usuario'] ?? null;
-
 $despesas = [];
 
 if ($usuario_id) {
     $model = new Despesa();
-    $despesas = $model->listarPorUsuario($usuario_id);
+
+    // Verifica se foi passado filtro por mês e ano
+    $mes = $_GET['mes'] ?? null;
+    $ano = $_GET['ano'] ?? null;
+
+    if ($mes && $ano) {
+        $despesas = $model->listarPorMesEAno($usuario_id, $mes, $ano); // método filtrado
+    } else {
+        $despesas = $model->listarPorUsuario($usuario_id); // sem filtro
+    }
 }
 ?>
 
@@ -32,52 +40,58 @@ if ($usuario_id) {
         <img src="images/logo-desenrolai.svg" class="image-logo">
         <i class="fa-solid fa-arrow-right-to-bracket fa-2x" style="color: #000;" onclick="window.location.href='home.php'"></i>
     </header>
-
+    
     <main class="main">
-        <section class="table-header">
-            <h1>Suas despesas</h1>
-        </section>
+    <section class="table-header">
+        <h1>Suas despesas</h1>
+    </section>
 
-        <section class="container-main">
-            <div class="btn-group">
+    <section class="container-main">
+        <form method="GET" class="d-flex flex-wrap align-items-center" action="">
+            <div class="btn-group me-2">
                 <button type="button" id="btnMes" class="btn btn-success dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                Escolha um mês
+                    <?= isset($_GET['mes']) ? DateTime::createFromFormat('!m', $_GET['mes'])->format('F') : 'Escolha um mês' ?>
                 </button>
-                <ul class="dropdown-menu dropdown-menu-scroll">
-                    <li><a class="dropdown-item">Janeiro</a></li>
-                    <li><a class="dropdown-item">Fevereiro</a></li>
-                    <li><a class="dropdown-item">Março</a></li>
-                    <li><a class="dropdown-item">Abril</a></li>
-                    <li><a class="dropdown-item">Maio</a></li>
-                    <li><a class="dropdown-item">Junho</a></li>
-                    <li><a class="dropdown-item">Julho</a></li>
-                    <li><a class="dropdown-item">Agosto</a></li>
-                    <li><a class="dropdown-item">Setembro</a></li>
-                    <li><a class="dropdown-item">Outubro</a></li>
-                    <li><a class="dropdown-item">Novembro</a></li>
-                    <li><a class="dropdown-item">Dezembro</a></li>
+                <ul class="dropdown-menu dropdown-menu-scroll" id="mesLista">
+                    <?php
+                    $meses = [
+                        1 => 'Janeiro', 2 => 'Fevereiro', 3 => 'Março', 4 => 'Abril',
+                        5 => 'Maio', 6 => 'Junho', 7 => 'Julho', 8 => 'Agosto',
+                        9 => 'Setembro', 10 => 'Outubro', 11 => 'Novembro', 12 => 'Dezembro'
+                    ];
+                    foreach ($meses as $num => $nome) {
+                        echo "<li><a class='dropdown-item' href='#' data-value='$num'>$nome</a></li>";
+                    }
+                    ?>
                 </ul>
+                <input type="hidden" name="mes" id="inputMes" value="<?= $_GET['mes'] ?? '' ?>">
             </div>
 
-            <p>E</p>
-   
-            <div class="btn-group">
+            <p class="m-2">E</p>
+
+            <div class="btn-group me-2">
                 <button type="button" id="btnAno" class="btn btn-success dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                Escolha um ano
+                    <?= $_GET['ano'] ?? 'Escolha um ano' ?>
                 </button>
-                <ul class="dropdown-menu dropdown-menu-scroll" id="anosLista"></ul>
+                <ul class="dropdown-menu dropdown-menu-scroll" id="anosLista">
+                    <?php for ($ano = 2000; $ano <= 2080; $ano++): ?>
+                        <li><a class="dropdown-item" href="#" data-value="<?= $ano ?>"><?= $ano ?></a></li>
+                    <?php endfor; ?>
+                </ul>
+                <input type="hidden" name="ano" id="inputAno" value="<?= $_GET['ano'] ?? '' ?>">
             </div>
 
             <div class="btn-filter">
-                <button class="btn-filte">Filtrar</button>
+                <button type="submit" class="btn btn-primary">Filtrar</button>
             </div>
+        </form>
 
-            <div class="add">
-                <i class="fa-solid fa-circle-plus fa-2x" style="color: #aae865;" id="abrirModalAdd" aria-label="Adicionar despesa"></i>
-            </div>
-        </section>
+        <div class="add mt-3">
+            <i class="fa-solid fa-circle-plus fa-2x" style="color: #aae865;" id="abrirModalAdd" aria-label="Adicionar despesa"></i>
+        </div>
+    </section>
 
-        <section class="table-body">
+    <section class="table-body">
         <table class="table table-hover">
             <thead>
                 <tr class="col-main">
@@ -121,8 +135,27 @@ if ($usuario_id) {
                 </tr>
             </tfoot>
         </table>
-        </section>
-    </main>
+    </section>
+
+    <script>
+        document.querySelectorAll('#mesLista .dropdown-item').forEach(item => {
+            item.addEventListener('click', function () {
+                const valor = this.getAttribute('data-value');
+                document.getElementById('inputMes').value = valor;
+                document.getElementById('btnMes').textContent = this.textContent;
+            });
+        });
+
+        document.querySelectorAll('#anosLista .dropdown-item').forEach(item => {
+            item.addEventListener('click', function () {
+                const valor = this.getAttribute('data-value');
+                document.getElementById('inputAno').value = valor;
+                document.getElementById('btnAno').textContent = this.textContent;
+            });
+        });
+    </script>
+</main>
+
 
     <!------ ADICIONAR UMA DESPESA ------->
     <div id="modal-add" class="modal">
@@ -227,6 +260,38 @@ if ($usuario_id) {
         });
         document.getElementById('fecharModalRemoveBtn').addEventListener('click', () => {
             document.getElementById('modal-remove').style.display = 'none';
+        });
+    </script>
+
+
+    <script>
+        //filtro de mes e ano
+        let mesSelecionado = null;
+        let anoSelecionado = null;
+
+        // Quando clicar em um mês
+        document.querySelectorAll('#mesLista .dropdown-item').forEach(item => {
+            item.addEventListener('click', () => {
+                mesSelecionado = item.getAttribute('data-value');
+                document.getElementById('btnMes').textContent = item.textContent;
+            });
+        });
+
+        // Quando clicar em um ano
+        document.querySelectorAll('#anosLista .dropdown-item').forEach(item => {
+            item.addEventListener('click', () => {
+                anoSelecionado = item.getAttribute('data-value');
+                document.getElementById('btnAno').textContent = item.textContent;
+            });
+        });
+
+        // Quando clicar em "Filtrar"
+        document.querySelector('.btn-filte').addEventListener('click', () => {
+            if (mesSelecionado && anoSelecionado) {
+                window.location.href = `?mes=${mesSelecionado}&ano=${anoSelecionado}`;
+            } else {
+                alert("Selecione mês e ano!");
+            }
         });
     </script>
 

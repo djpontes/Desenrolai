@@ -3,10 +3,10 @@ require_once __DIR__ . '/../models/Despesa.php';
 session_start();
 
 $action = $_GET['action'] ?? '';
+$model = new Despesa();
 
+// Cadastro e exclusão (POST)
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $model = new Despesa();
-
     if ($action === 'cadastrar') {
         $descricao = $_POST['descricao'];
         $valor = floatval($_POST['valor']); // já tratado no JS
@@ -20,13 +20,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
-    if ($_SERVER['REQUEST_METHOD'] === 'POST' && $action === 'deletar') {
+    if ($action === 'deletar') {
         $id = intval($_POST['id']);
-        $model = new Despesa();
         $model->deletar($id);
     
         header("Location: ../views/despesa.php?sucesso=1");
         exit;
     }
+}
+
+// Filtro por mês e ano (GET)
+if ($action === 'filtrar') {
+    $usuario_id = $_SESSION['id_usuario'] ?? null;
+
+    if ($usuario_id) {
+        $mes = $_GET['mes'] ?? null;
+        $ano = $_GET['ano'] ?? null;
+
+        $despesasFiltradas = $model->filtrarPorMesEAno($usuario_id, $mes, $ano);
+
+        // Armazena na sessão para exibir na tela de despesas
+        $_SESSION['despesas_filtradas'] = $despesasFiltradas;
+    }
+
+    header("Location: ../views/despesa.php");
+    exit;
 }
 ?>

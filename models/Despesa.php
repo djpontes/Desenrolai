@@ -36,5 +36,38 @@ class Despesa {
         $stmt->bindValue(':id', $id, PDO::PARAM_INT);
         return $stmt->execute();
     }
+
+    public function listarPorUsuarioFiltrado($usuarioId, $mes, $ano) {
+        $sql = "SELECT * FROM despesas 
+                WHERE ID_USUARIO = :usuario_id 
+                  AND MONTH(DATAS) = :mes 
+                  AND YEAR(DATAS) = :ano 
+                ORDER BY DATAS DESC";
+    
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(':usuario_id', $usuarioId, PDO::PARAM_INT);
+        $stmt->bindParam(':mes', $mes, PDO::PARAM_INT);
+        $stmt->bindParam(':ano', $ano, PDO::PARAM_INT);
+        $stmt->execute();
+    
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function listarPorMesEAno($usuario_id, $mes, $ano) {
+        $sql = "SELECT * FROM despesa 
+                WHERE USUARIO_ID = :usuario_id 
+                  AND MONTH(DATAS) = :mes 
+                  AND YEAR(DATAS) = :ano 
+                ORDER BY DATAS DESC";
+    
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindParam(':usuario_id', $usuario_id, PDO::PARAM_INT);
+        $stmt->bindParam(':mes', $mes, PDO::PARAM_INT);
+        $stmt->bindParam(':ano', $ano, PDO::PARAM_INT);
+        $stmt->execute();
+    
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
 }
 ?>
