@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/view/style/global.css">
-    <link rel="stylesheet" href="/view/style/relatorio.css">
+    <link rel="stylesheet" href="style/global.css">
+    <link rel="stylesheet" href="style/relatorio.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <title>Desenrola.i</title>
 </head>
 <body>
     <header class="header"> 
-        <img src="/view/images/logo-desenrolai.svg" class="image-logo">
+        <img src="images/logo-desenrolai.svg" class="image-logo">
         <i class="fa-solid fa-arrow-right-to-bracket fa-2x" style="color: #000;" onclick="window.location.href='home.html'"></i>
     </header>
 
