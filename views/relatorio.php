@@ -31,7 +31,7 @@ $anosDisponiveis = $model->getAnosDisponiveis();
             <h1>Relatório das suas despesas</h1>
         </section>
 
-        <section class="container-main d-flex justify-content-start gap-3">
+        <section class="container-main d-flex justify-content-center align-items-center gap-3 flex-wrap">
             <form method="GET" class="d-flex align-items-center gap-2">
                 <select name="ano" class="form-select">
                     <?php foreach ($anosDisponiveis as $ano): ?>
