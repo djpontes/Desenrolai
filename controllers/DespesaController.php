@@ -5,11 +5,10 @@ session_start();
 $action = $_GET['action'] ?? '';
 $model = new Despesa();
 
-// Cadastro e exclusão (POST)
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($action === 'cadastrar') {
         $descricao = $_POST['descricao'];
-        $valor = floatval($_POST['valor']); // já tratado no JS
+        $valor = floatval($_POST['valor']); 
         $data = $_POST['data'];
         $categoria = $_POST['categoria'];
         $usuario_id = $_SESSION['id_usuario'];
@@ -29,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// Filtro por mês e ano (GET)
+
 if ($action === 'filtrar') {
     $usuario_id = $_SESSION['id_usuario'] ?? null;
 
@@ -39,7 +38,7 @@ if ($action === 'filtrar') {
 
         $despesasFiltradas = $model->filtrarPorMesEAno($usuario_id, $mes, $ano);
 
-        // Armazena na sessão para exibir na tela de despesas
+       
         $_SESSION['despesas_filtradas'] = $despesasFiltradas;
     }
 

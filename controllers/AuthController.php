@@ -19,20 +19,17 @@ class AuthController {
             $usuario = $this->model->login($email, $senha);
             
             if ($usuario) {
-                // Login bem-sucedido
                 $_SESSION['id_usuario'] = $usuario['ID_USUARIO'];
                 $_SESSION['nome_usuario'] = $usuario['NOME'];
                 $_SESSION['email_usuario'] = $usuario['EMAIL'];
                 header('Location: ../views/menu.php');
                 exit();
             } else {
-                // Login falhou
                 header('Location: ../views/home.php?erro=1');
                 exit();
             }
         }
 
-        // Se não for POST, redireciona
         header('Location: ../views/home.php');
         exit();
     }

@@ -28,7 +28,6 @@ class RelatorioModel {
 
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        // Preencher os 12 meses com 0 caso não tenha valores
         $totais = array_fill(1, 12, 0);
         foreach ($result as $row) {
             $totais[intval($row['mes'])] = floatval($row['total_mes']);

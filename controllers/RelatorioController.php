@@ -9,7 +9,6 @@ class RelatorioController {
         $totaisMensais = $model->getTotaisMensaisPorAno($anoSelecionado);
         $totalAnual = array_sum($totaisMensais);
 
-        // Passar dados para a view
         include 'views/relatorio.php';
     }
 }

@@ -12,14 +12,13 @@ $despesas = [];
 if ($usuario_id) {
     $model = new Despesa();
 
-    // Verifica se foi passado filtro por mês e ano
     $mes = $_GET['mes'] ?? null;
     $ano = $_GET['ano'] ?? null;
 
     if ($mes && $ano) {
-        $despesas = $model->listarPorMesEAno($usuario_id, $mes, $ano); // método filtrado
+        $despesas = $model->listarPorMesEAno($usuario_id, $mes, $ano); 
     } else {
-        $despesas = $model->listarPorUsuario($usuario_id); // sem filtro
+        $despesas = $model->listarPorUsuario($usuario_id); 
     }
 }
 ?>
@@ -167,7 +166,7 @@ if ($usuario_id) {
     <!------ ADICIONAR UMA DESPESA ------->
     <div id="modal-add" class="modal">
         <div class="modal-content">
-            <a class="fechar" id="fecharModalAdd">&times;</a><!-- fecha o modal -->
+            <a class="fechar" id="fecharModalAdd">&times;</a>
 
             <div class="text-add">
                 <h2>Adicionar despesa</h2>
@@ -175,10 +174,9 @@ if ($usuario_id) {
     
             <form class="add-despesa" action="../controllers/DespesaController.php?action=cadastrar" method="POST">
                 <input type="text" name="descricao" placeholder="Digite sua despesa..." class="input-despesa" required>
-                <!-- Campo visível -->
+                
                 <input type="text" name="valor_formatado" placeholder="Digite o valor (ex: 1234,56)" class="input-valor" required oninput="formatarValor(this)">
 
-                <!-- Campo real escondido -->
                 <input type="hidden" name="valor" id="valorReal">
                 <input type="date" name="data" class="input-data" required/>   
                 
@@ -211,10 +209,9 @@ if ($usuario_id) {
     </div>
 
     <form class="edit-despesa" action="../controllers/DespesaController.php?action=editar" method="POST">
-      <!-- Campo oculto para o ID da despesa -->
+     
       <input type="hidden" name="id" id="edit-id">
 
-      <!-- Descrição -->
       <input 
         type="text" 
         name="descricao" 
@@ -224,7 +221,6 @@ if ($usuario_id) {
         required
       >
 
-      <!-- Valor -->
       <input 
         type="text" 
         name="valor" 
@@ -234,7 +230,6 @@ if ($usuario_id) {
         required
       >
 
-      <!-- Data -->
       <input 
         type="date" 
         name="data" 
@@ -243,7 +238,6 @@ if ($usuario_id) {
         required
       >
 
-      <!-- Categoria -->
       <select 
         name="categoria" 
         id="edit-categoria" 
@@ -262,13 +256,10 @@ if ($usuario_id) {
         <option value="Outro">Outro</option>
       </select>
 
-      <!-- Botão -->
       <button type="submit" class="form-botao" id="btnEditar">Editar</button>
     </form>
   </div>
 </div>
-
-
 
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
@@ -280,10 +271,8 @@ if ($usuario_id) {
     function formatarValor(input) {
         let valor = input.value;
 
-        // Remove tudo que não é número ou vírgula
         valor = valor.replace(/[^\d,]/g, '');
 
-        // Se já tiver mais de uma vírgula, remove a extra
         let partes = valor.split(',');
         if (partes.length > 2) {
             valor = partes[0] + ',' + partes[1];
@@ -291,14 +280,12 @@ if ($usuario_id) {
 
         input.value = valor;
 
-        // Converte para formato americano
         let valorBanco = valor.replace('.', '').replace(',', '.');
         document.getElementById('valorReal').value = valorBanco;
     }
     </script>
 
     <script>
-        // Abrir o modal de remoção e preencher os dados
         document.querySelectorAll('.open-remove-modal').forEach(icon => {
             icon.addEventListener('click', () => {
                 const id = icon.getAttribute('data-id');
@@ -310,7 +297,6 @@ if ($usuario_id) {
             });
         });
 
-        // Fechar modal
         document.getElementById('fecharModalRemove').addEventListener('click', () => {
             document.getElementById('modal-remove').style.display = 'none';
         });
@@ -321,11 +307,9 @@ if ($usuario_id) {
 
 
     <script>
-        //filtro de mes e ano
         let mesSelecionado = null;
         let anoSelecionado = null;
 
-        // Quando clicar em um mês
         document.querySelectorAll('#mesLista .dropdown-item').forEach(item => {
             item.addEventListener('click', () => {
                 mesSelecionado = item.getAttribute('data-value');
@@ -333,7 +317,6 @@ if ($usuario_id) {
             });
         });
 
-        // Quando clicar em um ano
         document.querySelectorAll('#anosLista .dropdown-item').forEach(item => {
             item.addEventListener('click', () => {
                 anoSelecionado = item.getAttribute('data-value');
@@ -341,7 +324,6 @@ if ($usuario_id) {
             });
         });
 
-        // Quando clicar em "Filtrar"
         document.querySelector('.btn-filte').addEventListener('click', () => {
             if (mesSelecionado && anoSelecionado) {
                 window.location.href = `?mes=${mesSelecionado}&ano=${anoSelecionado}`;
@@ -353,21 +335,18 @@ if ($usuario_id) {
 
     <script>
     function abrirModalEditar(element) {
-    // Pega os dados diretamente dos atributos data-*
     const id = element.dataset.id;
     const descricao = element.dataset.descricao;
-    const valor = element.dataset.valor.replace(',', '.'); // garante que funcione no campo
+    const valor = element.dataset.valor.replace(',', '.'); 
     const data = element.dataset.data;
     const categoria = element.dataset.categoria;
 
-    // Preenche os campos do modal
     document.getElementById('edit-id').value = id;
     document.getElementById('edit-descricao').value = descricao;
     document.getElementById('edit-valor').value = valor;
     document.getElementById('edit-data').value = data;
     document.getElementById('edit-categoria').value = categoria;
 
-    // Abre o modal
     document.getElementById('modal-edit').style.display = 'block';
     }
 
@@ -376,13 +355,10 @@ if ($usuario_id) {
     });
 
 
-
-        // Abrir o modal de adicionar
     document.getElementById('abrirModalAdd').addEventListener('click', function () {
         document.getElementById('modal-add').style.display = 'block';
     });
 
-    // Fechar o modal de adicionar
     document.getElementById('fecharModalAdd').addEventListener('click', function () {
         document.getElementById('modal-add').style.display = 'none';
     });

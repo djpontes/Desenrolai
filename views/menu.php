@@ -24,7 +24,6 @@ if (isset($_SESSION['erro'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Corrigindo caminhos (remova a barra inicial /view/) -->
     <link rel="stylesheet" href="style/global.css">
     <link rel="stylesheet" href="style/menu.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -33,7 +32,7 @@ if (isset($_SESSION['erro'])) {
 <body>
     <header class="header"> 
         <img src="images/logo-desenrolai.svg" class="image-logo">
-        <!-- Ícone de logout -->
+       
         <i class="fa-solid fa-arrow-right-to-bracket fa-2x" 
         style="color: #000000; cursor: pointer;" 
         onclick="window.location.href='../controllers/AuthController.php?action=logout'"></i>
@@ -41,7 +40,7 @@ if (isset($_SESSION['erro'])) {
 
     <main class="main"> 
         <div class="container">
-             <!-- Alterando links para .php -->
+           
              <button class="btn-enorme" onclick="window.location.href='despesa.php'">
                 <img src="images/despesas.svg" alt="Icone de despesas">
                 <h3>Suas despesas</h3>
@@ -67,7 +66,6 @@ if (isset($_SESSION['erro'])) {
                 <h2>Editar seu perfil</h2>
             </div>
 
-            <!-- Formulário para editar perfil (substitua pelos dados reais do usuário) -->
             <form class="form-perfil" action="../controllers/UsuarioController.php?action=editar" method="POST">
                 <input type="text" name="nome" value="<?php echo $_SESSION['nome_usuario'] ?? ''; ?>" class="input-name">
                 <input type="email" name="email" value="<?php echo $_SESSION['email_usuario'] ?? ''; ?>" class="input-email">
@@ -81,10 +79,8 @@ if (isset($_SESSION['erro'])) {
         </div>
     </div>
 
-    <!-- Corrigindo caminho do JS -->
     <script src="script/menu.js"></script>
 
-    <!-- Mostrando nome do usuário logado (opcional) -->
     <script>
         console.log("Usuário logado: <?php echo $_SESSION['nome_usuario'] ?? 'Visitante'; ?>");
     </script>

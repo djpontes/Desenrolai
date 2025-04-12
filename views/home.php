@@ -3,7 +3,6 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
     session_start();
 }
 
-// Mostra erro apenas se existir na URL
 if (isset($_GET['erro'])) {
     $mensagem = "E-mail ou senha incorretos. Por favor, verifique ou cadastre-se.";
     if ($_GET['erro'] === 'cadastro') {
@@ -44,7 +43,6 @@ if (isset($_GET['erro'])) {
                 <button id="btnSignup">Cadastrar</button>
             </div>
 
-            <!-- Formulário de Login -->
             <form id="login" action="../controllers/AuthController.php?action=login" method="POST">
                 <input type="email" name="email" placeholder="Digite seu e-mail" class="input-email" required>
                 <div class="password-container">
@@ -54,7 +52,6 @@ if (isset($_GET['erro'])) {
                 <button type="submit" class="form-botao" id="btnLogin">Entrar</button>
             </form>
 
-            <!-- Formulário de Cadastro -->
             <form id="signup" action="../controllers/AuthController.php?action=cadastrar" method="POST">
                 <input type="text" name="nome" placeholder="Digite seu nome" class="input-name" required>
                 <input type="email" name="email" placeholder="Digite seu e-mail" class="input-email" required>
