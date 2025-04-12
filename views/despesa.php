@@ -81,7 +81,7 @@ if ($usuario_id) {
             </div>
 
             <div class="btn-filter">
-                <button type="submit" class="btn btn-primary">Filtrar</button>
+                <button type="submit" class="btn-filte">Filtrar</button>
             </div>
         </form>
 
@@ -150,6 +150,7 @@ if ($usuario_id) {
                 document.getElementById('inputMes').value = valor;
                 document.getElementById('btnMes').textContent = this.textContent;
             });
+            
         });
 
         document.querySelectorAll('#anosLista .dropdown-item').forEach(item => {

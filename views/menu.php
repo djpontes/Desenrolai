@@ -70,7 +70,7 @@ if (isset($_SESSION['erro'])) {
                 <input type="text" name="nome" value="<?php echo $_SESSION['nome_usuario'] ?? ''; ?>" class="input-name">
                 <input type="email" name="email" value="<?php echo $_SESSION['email_usuario'] ?? ''; ?>" class="input-email">
                 <div class="campo-senha">
-                    <input type="password" name="senha" placeholder="Nova senha (deixe em branco para manter)" class="input-senha">
+                    <input type="password" name="senha" placeholder="Nova senha" class="input-senha">
                     <i class="fa-solid fa-eye" id="togglePasswordSignup"></i>
                 </div>                
                 <button type="submit" class="form-botao" id="btnCadastrar">Editar</button>

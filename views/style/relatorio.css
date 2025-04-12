@@ -86,11 +86,78 @@ table {
     border-collapse: collapse;
 }
 
-tfoot {
+
+  .table-header h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 0.5rem;
+  }
+
+  .container-main {
+    margin-bottom: 2rem;
+  }
+
+  .btn-success {
+    background-color: #aae865 !important;
+    border-color: #aae865 !important;
+  }
+
+  .scroll-wrapper {
+    max-height: 300px;
+    overflow-y: auto;
+  }
+
+  .table-fixed {
+    width: 100%;
+    margin: 0;
+    border-collapse: collapse;
+  }
+
+  .table-fixed thead th {
+    position: sticky;
+    top: 0;
+    background-color: #aae865 !important;
+    color: #000000;
+    z-index: 10;
+    padding: 16px;
+  }
+
+  .table-fixed tfoot td,
+  .table-fixed tfoot th {
     position: sticky;
     bottom: 0;
-    background-color: #aae865;
-}
+    background-color: #aae865 !important;
+    color:  #000000;
+    padding: 16px;
+    z-index: 10;
+  }
+
+  .table-fixed td,
+  .table-fixed th {
+    padding: 16px;
+    font-size: 1rem;
+  }
+
+  .table-fixed th:first-child,
+  .table-fixed td:first-child {
+    text-align: left;
+    width: 60%;
+  }
+
+  .table-fixed th:last-child,
+  .table-fixed td:last-child {
+    text-align: right;
+    width: 40%;
+  }
+  
+  .scroll-wrapper::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .scroll-wrapper::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 4px;
+  }
 
 /************** RESPONSIVIDADE *************/
 
